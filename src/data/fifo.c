@@ -93,3 +93,4 @@ int fifo_write( struct fifo_s *fifo, char *data, size_t length )
 		return count;
 	}
 }
+

@@ -7,15 +7,17 @@
 # build, Makefile.config will assume we want to run make
 # in all of them.
 SUBDIRS=src
-# We don't want to build compile and sources, nor a
+# We don't want to compile any sources, nor build a
 # library in this directory
 SRCS=
 LIB=
+# Targets listed here will be build after everything else
+FINAL=success
 
 #
 # To build the binary image...
 #
-all: success
+.PHONY: success
 
 success: focus.bin
 	@echo '--'

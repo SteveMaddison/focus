@@ -35,3 +35,4 @@ void main( void )
 	/* fire up the shell! */
 	shell_start();
 }
+
