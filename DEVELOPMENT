@@ -14,14 +14,16 @@ why non-ANSI C language extensions have been avoided.
 
 In theory, to port the kernel to another target shouldn't require much
 work. The architecture-dependent parts of the C code are surrounded by
-'#ifdef ARCH_<whatever>' directives, and all assembly code is (currently)
-in one file.
+'#ifdef ARCH_<whatever>' directives, and all assembly code is located in
+the appropriate subdirectory of src/arch.
 
 
 2. State of the Project
 ~~~~~~~~~~~~~~~~~~~~~~~
 As the kernel is in the early stages of development, a lot of the code is
-rather less than efficient.
+rather less than efficient. The size of the produced kernel image is also
+way too large at the moment. The current plan to help this situation is to
+rewrite some architecture-specific stuff in assembly.
 
 Note also that some of the supposedly 'standard' functions (e.g. prinf())
 may well have decidedly non-standard behaviour.
@@ -33,3 +35,4 @@ Any contributions gratefully received! Please supply any patches as a
 diff against a particular version distribution to either
 <focus-bugs@cosam.org> for bug fixes, or <focus@cosam.org> for other
 patches.
+
