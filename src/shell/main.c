@@ -1,6 +1,7 @@
 #include "focus/fifo.h"
 #include "focus/shell.h"
 #include "focus/shell/commands.h"
+#include "focus/shell/env.h"
 #include "focus/util.h"
 #include "focus/memory.h"
 #include "focus/vfs.h"
@@ -24,6 +25,8 @@ int shell_start( void )
     	return 1;
 	}
 
+	env_init();
+
     for(;;){
     	printf("> ");
 		bytes = readline( fd, buffer, SHELL_BUFFER_SIZE );
@@ -40,6 +43,9 @@ int shell_start( void )
 					}
 				}
 				printf("\n");
+			}
+			else if( !strcmp( words[0], "env" ) ) {
+				cmd_env( word_count, words );
 			}
 			else if( !strcmp( words[0], "exit" ) ) {
 				printf("bye...\n");
@@ -67,23 +73,41 @@ static int parse( char *buffer, char *words[], int size )
 			buffer++;
 		start = buffer;
 
-		if( *buffer == '"' || *buffer == '\'' ) {
-			quote = *buffer;
-			start++;
-			buffer++;
-			while( *buffer && *buffer != quote ) {
+		switch( *buffer ) {
+			case '"':
+			case '\'':
+				quote = *buffer;
+				start++;
 				buffer++;
-			}
-			if( *buffer == quote ) {
+				while( *buffer && *buffer != quote ) {
+					buffer++;
+				}
+				if( *buffer == quote ) {
+					*buffer = '\0';
+					buffer++;
+				}
+				else {
+					printf( "Unmatched quote (%c)\n", quote );
+					return 0;
+				}
+				words[count++] = start;
+				break;
+
+			case '$':
+				start++;
+				buffer++;
+				while( *buffer && *buffer != ' ' ) {
+					buffer++;
+				}
 				*buffer = '\0';
-				buffer++;
-			}
-			else {
-				printf( "Unmatched quote (%c)\n", quote );
-				return 0;
-			}
+				if( words[count] = env_get( start ) )
+					count++;
+				break;
+
+			default:
+				words[count++] = start;
+				break;
 		}
-		words[count++] = start;
 
 		while( *buffer && *buffer != ' ' )
 			buffer++;

@@ -1,7 +1,38 @@
 #include "focus/shell.h"
 #include "focus/shell/commands.h"
+#include "focus/shell/env.h"
 #include "focus/util.h"
 #include "focus/memory.h"
+
+int cmd_env( int argc, char *argv[] ) {
+	struct env_var_s *var = env_start;
+	char *value;
+
+	switch( argc )
+	{
+		case 1:
+			while( var ) {
+				printf("%s=%s\n", var->name, var->value );
+				var = var->next;
+			}
+			break;
+		case 2:
+			value = env_get( argv[1] );
+			if( value ) {
+				printf( "%s\n", value );
+			}
+			break;
+		case 3:
+			return env_set( argv[1], argv[2] );
+			break;
+		default:
+			printf("Usage: env [name [value]]\n");
+			return -1;
+			break;
+	}
+
+	return 0;
+}
 
 int cmd_mem( void ) {
 	struct mem_stat_s *mstat;

@@ -74,8 +74,9 @@ int strcmp( const char* this, const char* that ) {
 
 int strlen( const char* string )
 {
+	char *pos = string;
 	int length = 0;
-	while( string++ != '\0' )
+	while( *pos++ != '\0' )
 		length++;
 
 	return length;
