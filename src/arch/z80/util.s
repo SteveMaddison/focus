@@ -18,14 +18,12 @@
 ;  global function identifiers
 ;-------------------------------
 
-; prototypes declared in 'focus/io.h'
+; prototypes declared in 'util.h'
 	.globl _outb			; i/o port output
 	.globl _inb				; i/o port input
 
 ; prototypes declared 'util.h'
 	.globl _get_sp			; get stack pointer
-	.globl _save_context
-	.globl _restore_context
 
 
 ;-----------------
@@ -93,18 +91,6 @@ _get_sp::
 	ld		hl, #0x0000
 	add		hl, sp
 	ret
-
-_save_context::
-	push	af
-	push	bc
-	push	de
-	push	hl
-
-_restore_context::
-	pop		hl
-	pop		de
-	pop		bc
-	pop		af
 
 
 ;----------------------------------------------------

@@ -21,12 +21,11 @@ struct fifo_s {
 	char	flags;
 };
 
-struct fifo_s *fifo_create( size_t size );
-void fifo_destroy( struct fifo_s *fifo );
-void fifo_clear( struct fifo_s *fifo );
+extern struct fifo_s *fifo_create( size_t size );
+extern void fifo_destroy( struct fifo_s *fifo );
+extern void fifo_clear( struct fifo_s *fifo );
 
-int fifo_read( struct fifo_s *fifo, char *data, size_t length );
-int fifo_write( struct fifo_s *fifo, char *data, size_t length );
-void fifo_dump( struct fifo_s *fifo );
+extern int fifo_read( struct fifo_s *fifo, char *data, size_t length );
+extern int fifo_write( struct fifo_s *fifo, char *data, size_t length );
 
 #endif /* _FIFO_H_ */

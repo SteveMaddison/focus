@@ -10,6 +10,7 @@
 # include "focus/readline.h"
 #endif
 
+/* used to prevent compiler warnings */
 #define UNUSED(x) (x)=(x)
 
 extern void outb( char port, char byte );
@@ -23,11 +24,11 @@ extern void reset( void );
 extern void doh( const char* message );
 extern void stack_dump( void );
 
-void *memcpy( void* dest, const void* src, size_t n );
-void *memset( void *dest, char byte, size_t n );
+extern void *memcpy( void* dest, const void* src, size_t n );
+extern void *memset( void *dest, char byte, size_t n );
 
-char *strcpy( char* dest, const char* src );
-int strcmp( const char* this, const char* that );
-int strlen( const char* string );
+extern char *strcpy( char* dest, const char* src );
+extern int strcmp( const char* this, const char* that );
+extern int strlen( const char* string );
 
 #endif /* _UTIL_H_ */
