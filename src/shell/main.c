@@ -39,7 +39,6 @@ int shell_start( void )
 		buffer[ bytes ] = '\0';
 		word_count = parse( buffer, &words, bytes );
 		if( word_count ) {
-			printf("%d words, first is '%s'\n", word_count, words[0] );
 			if( !strcmp( words[0], "cls" ) ) {
 				cls();
 			}
