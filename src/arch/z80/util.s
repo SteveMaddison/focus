@@ -22,13 +22,6 @@
 	.globl _outb			; i/o port output
 	.globl _inb				; i/o port input
 
-; prototypes declared 'interrupt.c'
-	.globl _intr_set_i		; set interrupt vector
-; prototypes declared 'interrupt.h'
-	.globl _intr_enable		; enable interrupts
-	.globl _intr_disable	; disable interrupts
-	.globl _intr_return		; return from interrupt handler
-
 ; prototypes declared 'util.c'
 	.globl _get_sp			; get stack pointer
 
@@ -69,6 +62,7 @@ _inb::
 	pop		bc
 	ret
 
+
 ;----------------------------------------------------
 ; BYTE inbfe( BYTE port );
 ;
@@ -88,54 +82,6 @@ _inb_fe::
 
 
 ;----------------------------------------------------
-; void intr_set_i( BYTE i_reg );
-;
-; sets the (interrupt vector) I register to <i_reg>
-; and sets the interrupt mode (2)
-;----------------------------------------------------
-_intr_set_i::
-	push	af
-	ld		hl, #0x0004
-	add		hl, sp
-	ld		a, (hl)
-	ld		i, a
-	im		2
-	pop		af
-	ret
-
-
-;----------------------------------------------------
-; void intr_enable( void );
-;
-; switches on interrupts
-;----------------------------------------------------
-_intr_enable::
-	ei
-	ret
-
-
-;----------------------------------------------------
-; void intr_disable( void );
-;
-; switches off interrupts
-;----------------------------------------------------
-_intr_disable::
-	di
-	ret
-
-
-;----------------------------------------------------
-; void intr_return( void );
-;
-; returns from an interrupt handler routine
-; (after enabling interrupts)
-;----------------------------------------------------
-_intr_return::
-	ei
-	reti
-
-
-;----------------------------------------------------
 ; size_t* get_sp( void );
 ;
 ; returns the stack pointer
@@ -144,6 +90,7 @@ _get_sp::
 	ld		hl, #0x0000
 	add		hl, sp
 	ret
+
 
 ;----------------------------------------------------
 ; void reset( void );

@@ -4,6 +4,7 @@
 extern int kb_init( void );
 extern char kb_scan( void );
 
+#define KB_BUFFER_SIZE      32
 
 #define	KB_MAX_KEY			40
 

@@ -14,8 +14,12 @@ static int parse( char* buffer, char **words, int size );
 
 void shell_start( void )
 {
+    char buffer[64];
+
     open( "con0:", 0 );
-    for(;;){}
+
+    for(;;){
+    }
 }
 
 static int parse( char* buffer, char **words, int size )

@@ -3,6 +3,7 @@
 #include "focus/spectrum/main.h"
 #include "focus/spectrum/console.h"
 #endif
+#include "focus/interrupt.h"
 #include "focus/util.h"
 #include "focus/types.h"
 #include "focus/version.h"
@@ -13,7 +14,6 @@
 
 
 static void banner();
-
 
 void main( void )
 {
@@ -28,11 +28,14 @@ void main( void )
 	memory_init();
 	device_init();
 	vfs_init();
+	intr_init();
 
 	/* new line after all initialisation messages */
 	printf("\n");
 
     console_init();
+
+    intr_enable();
 
 	/* fire up the shell! */
 	shell_start();
