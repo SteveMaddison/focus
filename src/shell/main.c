@@ -6,9 +6,6 @@
 #include "focus/memory.h"
 #include "focus/vfs.h"
 #include "focus/errno.h"
-#ifdef ARCH_SPECTRUM
-#include "focus/spectrum/console.h"
-#endif
 
 static int parse( char* buffer, char **words, int size );
 
@@ -19,6 +16,7 @@ int shell_start( void )
     int fd, bytes, word_count, i = 0;
     char *words[SHELL_MAX_WORDS];
     char *prompt;
+    struct command_s *command;
 
     fd = open( "con0:", 0 );
     if( fd == -1 ) {
@@ -39,24 +37,22 @@ int shell_start( void )
 		buffer[ bytes ] = '\0';
 		word_count = parse( buffer, &words, bytes );
 		if( word_count ) {
-			if( !strcmp( words[0], "cls" ) ) {
-				cls();
-			}
-			else if( !strcmp( words[0], "echo" ) ) {
-				cmd_echo( word_count, words );
-			}
-			else if( !strcmp( words[0], "env" ) ) {
-				cmd_env( word_count, words );
-			}
-			else if( !strcmp( words[0], "exit" ) ) {
+			if( !strcmp( words[0], "exit" ) ) {
 				printf("bye...\n");
 				return 0;
 			}
-			else if( !strcmp( words[0], "mem" ) ) {
-				cmd_mem();
-			}
 			else {
-				printf( "Unknown command\n" );
+				command = command_start();
+				while( command ) {
+					if( !strcmp( words[0], command->name ) ) {
+						(*command->function)( word_count, words );
+						break;
+					}
+					command = command->next;
+				}
+				if( !command ) {
+					printf( "Unknown command\n" );
+				}
 			}
 		}
     }

@@ -3,9 +3,75 @@
 #include "focus/shell/env.h"
 #include "focus/util.h"
 #include "focus/memory.h"
+#ifdef ARCH_SPECTRUM
+#include "focus/spectrum/console.h"
+#endif
 
 
-int cmd_echo( int argc, char *argv[] ) {
+static int cmd_cls ( int argc, char *argv[] );
+static int cmd_echo( int argc, char *argv[] );
+static int cmd_env ( int argc, char *argv[] );
+static int cmd_help( int argc, char *argv[] );
+static int cmd_mem ( int argc, char *argv[] );
+
+static const struct command_s cs_mem = {
+	"mem",
+	"Print memory info",
+	"Usage: mem",
+	cmd_mem,
+	NULL
+};
+static const struct command_s cs_help = {
+	"help",
+	"Get help",
+	"Usage: help [command]",
+	cmd_help,
+	&cs_mem
+};
+static const struct command_s cs_env = {
+	"env",
+	"Environment operations",
+	"Usage: env [name [value]]",
+	cmd_env,
+	&cs_help,
+};
+static const struct command_s cs_echo = {
+	"echo",
+	"Print parameters",
+	"Usage: echo [param [..param]]",
+	cmd_echo,
+	&cs_env
+};
+static const struct command_s cs_cls = {
+	"cls",
+	"Clear the screen",
+	"Usage: cls",
+	cmd_cls,
+	&cs_echo
+};
+
+const struct command_s *command_start( void )
+{
+	return &cs_cls;
+}
+
+
+/* Command: cls
+ */
+static int cmd_cls( int argc, char *argv[] )
+{
+	UNUSED(argc);
+	UNUSED(argv);
+
+	cls();
+	return 0;
+}
+
+
+/* Command: echo
+ */
+int cmd_echo( int argc, char *argv[] )
+{
 	int i;
 
 	for( i = 1 ; i < argc ; i++ ) {
@@ -18,7 +84,11 @@ int cmd_echo( int argc, char *argv[] ) {
 	return 0;
 }
 
-int cmd_env( int argc, char *argv[] ) {
+
+/* Command: env
+ */
+static int cmd_env( int argc, char *argv[] )
+{
 	struct env_var_s *var = env_start;
 	char *value;
 
@@ -48,8 +118,49 @@ int cmd_env( int argc, char *argv[] ) {
 	return 0;
 }
 
-int cmd_mem( void ) {
+
+/* Command: help
+ */
+static int cmd_help( int argc, char *argv[] )
+{
+	struct command_s *command = command_start();
+
+	switch( argc ) {
+		case 1:
+			printf( "%s\n", cs_help.help );
+			printf( "Available commands:\n" );
+			while( command ) {
+				printf("%s : %s\n", command->name, command->desc );
+				command = command->next;
+			}
+			break;
+
+		case 2:
+			while( command ) {
+				if( !strcmp( argv[1], command->name ) ) {
+					printf("%s: %s\n%s\n", command->name, command->desc, command->help );
+					break;
+				}
+				command = command->next;
+			}
+			break;
+
+		default:
+			printf( "%s\n", cs_help.help );
+			break;
+	}
+
+	return 0;
+}
+
+
+/* Command: mem
+*/
+static int cmd_mem( int argc, char *argv[] )
+{
 	struct mem_stat_s *mstat;
+	UNUSED(argc);
+	UNUSED(argv);
 
 	mstat = get_mem_stats();
 
@@ -58,3 +169,5 @@ int cmd_mem( void ) {
 
 	return 0;
 }
+
+
