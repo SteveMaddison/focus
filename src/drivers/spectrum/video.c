@@ -46,6 +46,12 @@ static void display_cursor( void )
 	*last_cursor_addr |= ATTR_FLASH;
 }
 
+static void hide_cursor( void )
+{
+    char *addr = attrib_addr( cursor.xpos, cursor.ypos );
+    *addr &= ~ATTR_FLASH;
+}
+
 void cls( void )
 {
 	char *addr;
@@ -131,6 +137,7 @@ void print_char( const char letter )
 	if ( letter < 1 || letter > 127 )
 		return;
 
+    hide_cursor();
 	last_cursor_addr = attrib_addr( cursor.xpos, cursor.ypos );
 
 	switch( letter ) {
@@ -169,8 +176,7 @@ void print_char( const char letter )
 		cursor.xpos = 0;
 	}
 	if ( cursor.ypos >= SCR_ROWS ) {
-		display_cursor();
-		last_cursor_addr -= SCR_ROWS;
+		last_cursor_addr -= SCR_ROWS - 1;
 		scroll();
 		cursor.ypos = SCR_ROWS - 1;
 	}
@@ -193,7 +199,7 @@ void scroll( void )
 	/* scroll the attributes */
 	memcpy(	(void*)ARAM_START, (void*)(ARAM_START+SCR_COLS), 768 - SCR_COLS );
 
-	/* add now row of attributes */
+	/* add new row of attributes */
 	for( addr = (char*)VRAM_END-SCR_COLS+1 ; addr <= (void*)VRAM_END ; addr++ )
 		*addr = attrib;
 
