@@ -4,6 +4,20 @@
 #include "focus/util.h"
 #include "focus/memory.h"
 
+
+int cmd_echo( int argc, char *argv[] ) {
+	int i;
+
+	for( i = 1 ; i < argc ; i++ ) {
+		printf( "%s", argv[ i ] );
+		if( i <= argc ) {
+			printf(" ");
+		}
+	}
+	printf("\n");
+	return 0;
+}
+
 int cmd_env( int argc, char *argv[] ) {
 	struct env_var_s *var = env_start;
 	char *value;

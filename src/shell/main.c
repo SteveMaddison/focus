@@ -43,13 +43,7 @@ int shell_start( void )
 				cls();
 			}
 			else if( !strcmp( words[0], "echo" ) ) {
-				for( i = 1 ; i < word_count ; i++ ) {
-					printf( "%s", words[ i ] );
-					if( i <= word_count ) {
-						printf(" ");
-					}
-				}
-				printf("\n");
+				cmd_echo( word_count, words );
 			}
 			else if( !strcmp( words[0], "env" ) ) {
 				cmd_env( word_count, words );
@@ -96,6 +90,7 @@ static int parse( char *buffer, char *words[], int size )
 				}
 				else {
 					printf( "Unmatched quote (%c)\n", quote );
+					words[0] = NULL;
 					return 0;
 				}
 				words[count++] = start;
@@ -124,6 +119,8 @@ static int parse( char *buffer, char *words[], int size )
 		if( pos < end )
 			pos++;
 	}
+	/* terminate list */
+	words[count] = NULL;
 
 	return count;
 }
