@@ -2,27 +2,6 @@
 # Make macros for Amiga target
 #
 
-# Architecture stuff
-ARCH=amiga
-CPU=m68k
-
-CC=/usr/m68k-unknown-coff/m68k-unknown-coff/bin/gcc
-CFLAGS=-fno-builtin -DDEBUG -I$(TOPDIR) -I./include -I$(TOPDIR)/include
-
-AS=/usr/m68k-unknown-coff/m68k-unknown-coff/bin/as
-ASFLAGS=
-
-AR=/usr/m68k-unknown-coff/m68k-unknown-coff/bin/ar
-ARFLAGS=-cr
-
-LD=/usr/m68k-unknown-coff/m68k-unknown-coff/bin/ld
-LDFLAGS=
-
-# Make sure first the first target we come across *isn't* focus.bin
-.PHONY: dummy
-all: dummy
-
-focus.bin: src/src.a
-	@echo Linking $@
-	@$(LD) $(LDFLAGS) -o $@ $<
+BINPATH=/usr/m68k-unknown-coff/m68k-unknown-coff/bin
+include $(TOPDIR)/config/Makefile.gcc
 

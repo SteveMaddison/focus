@@ -1,0 +1,25 @@
+#
+# For targets which use GCC the build is pretty similar
+# so we can safely make some rough assumptions.
+#
+
+CC=$(BINPATH)/gcc
+CFLAGS=-fno-builtin -DDEBUG -I$(TOPDIR) -I./include -I$(TOPDIR)/include
+
+AS=$(BINPATH)/as
+ASFLAGS=
+
+AR=$(BINPATH)/ar
+ARFLAGS=-cr
+
+LD=$(BINPATH)/ld
+LDFLAGS=
+
+# Make sure first the first target we come across *isn't* focus.bin
+.PHONY: dummy
+all: dummy
+
+focus.bin: src/src.a
+	@echo Linking $@
+	@$(LD) $(LDFLAGS) -o $@ $<
+
