@@ -2,7 +2,6 @@
 #define _SPECTRUM_H_
 
 #define MACHINE_NAME		"ZX Spectrum"
-#define ARCH_SPECTURM
 #define CPU_Z80
 
 /*
@@ -16,9 +15,7 @@
  * RAM starts at 0x4000
  * config.h: RAM_SIZE
  */
-#ifndef RAM_SIZE
-# define RAM_SIZE		0xc000	/* 48Kb */
-#endif
+#define RAM_SIZE		0xc000	/* 48Kb */
 #define RAM_START		0x4000
 #define RAM_END			((RAM_START)+(RAM_SIZE)-1)
 
@@ -37,9 +34,7 @@
  * Kernel stack of 512b
  * config.h: KSTACK_SIZE
  */
-#ifndef KSTACK_SIZE
-# define KSTACK_SIZE		512
-#endif
+#define KSTACK_SIZE		512
 #define KSTACK_END		0xffff
 #define KSTACK_START		((KSTACK_END)-(KSTACK_SIZE)+1)
 

@@ -11,3 +11,5 @@ STACK_ADDR=0xffff
 
 include $(TOPDIR)/config/Makefile.sdcc
 
+CFLAGS += -DARCH_SPECTRUM
+

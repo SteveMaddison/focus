@@ -5,3 +5,5 @@
 BINPATH=/usr/m68k-unknown-coff/m68k-unknown-coff/bin
 include $(TOPDIR)/config/Makefile.gcc
 
+CFLAGS += _DARCH_AMIGA
+
