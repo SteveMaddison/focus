@@ -70,7 +70,8 @@ static int env_create( char *name, char *value )
 		var->name = (char*)var + sizeof(struct env_var_s);
 		strcpy( var->name, name );
 		var->value = (char*)var->name + strlen(var->name) + 1;
-		var->value++ = '\0';
+		var->value++;
+		var->value = '\0';
 		strcpy( var->value, value );
 		var->next = env_start;
 		env_start = var;
