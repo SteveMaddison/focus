@@ -16,9 +16,9 @@ void doh( const char* message )
 
 void stack_dump( void )
 {
-	char* sp = get_sp();
+	char *sp = (char*)get_sp();
 	size_t size = KSTACK_END-(size_t)sp + 1;
-	char* loc;
+	char *loc;
 
 	printf( "stack dump:\n" );
 
@@ -33,7 +33,7 @@ void stack_dump( void )
 void *memcpy( void *dest, const void *src, size_t n )
 {
 	char *d = dest;
-	char *s = src;
+	char *s = (char*)src;
 	size_t i;
 
 	for ( i = 0 ; i < n ; i++ )
@@ -74,7 +74,7 @@ int strcmp( const char* this, const char* that ) {
 
 int strlen( const char* string )
 {
-	char *pos = string;
+	char *pos = (char*)string;
 	int length = 0;
 	while( *pos++ != '\0' )
 		length++;
