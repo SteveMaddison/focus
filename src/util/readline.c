@@ -2,8 +2,9 @@
 #include "focus/spectrum/keyboard.h"
 #include "focus/spectrum/video.h"
 #include "focus/spectrum/sound.h"
+#include "focus/vfs.h"
 
-int readline( char* buffer, int size )
+int readline( int fd, char* buffer, int size )
 {
 	int cur_pos = 0;
 	int length = 0;
@@ -15,11 +16,11 @@ int readline( char* buffer, int size )
 	get_cursor( &cur_start );
 
 	for(;;) {
-		if( c = kb_scan() ) {
+		if( read( fd, &c, 1 ) ) {
 			switch( c ) {
 				case '\n':
 					print_char('\n');
-					return 0;
+					return length;
 					break;
 
 				case KB_UP:

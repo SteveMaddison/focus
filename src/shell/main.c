@@ -5,15 +5,18 @@
 #include "focus/memory.h"
 #include "focus/vfs.h"
 #include "focus/errno.h"
+#ifdef ARCH_SPECTRUM
+#include "focus/spectrum/console.h"
+#endif
 
 static int parse( char* buffer, char **words, int size );
 
 
 int shell_start( void )
 {
-    char buffer[32];
-    int fd;
-    int counter = 0;
+    char buffer[SHELL_BUFFER_SIZE];
+    int fd, bytes, word_count, i = 0;
+    char *words[SHELL_MAX_WORDS];
 
     fd = open( "con0:", 0 );
     if( fd == -1 ) {
@@ -22,46 +25,52 @@ int shell_start( void )
 	}
 
     for(;;){
-		if( read( fd, buffer, 32 ) ) {
-			printf( "%s", buffer );
+    	printf("> ");
+		bytes = readline( fd, buffer, SHELL_BUFFER_SIZE );
+		buffer[ bytes ] = '\0';
+		if( word_count = parse( buffer, &words, bytes ) ) {
+			if( !strcmp( words[0], "cls" ) ) {
+				cls();
+			}
+			else if( !strcmp( words[0], "echo" ) ) {
+				for( i = 1 ; i < word_count ; i++ ) {
+					printf( "%s", words[ i ] );
+					if( i <= word_count ) {
+						printf(" ");
+					}
+				}
+				printf("\n");
+			}
+			else if( !strcmp( words[0], "mem" ) ) {
+				cmd_mem();
+			}
+			else {
+				printf( "Unknown command\n" );
+			}
 		}
     }
 }
 
-static int parse( char* buffer, char **words, int size )
+static int parse( char *buffer, char *words[], int size )
 {
-	char separator = '\0';
 	char *start = NULL;
-
-	start = buffer;
+	char *end = buffer + size;
+	int count = 0;
 
 	while( *buffer ) {
-		if( *buffer == ' ' || *buffer == '\t' ) {
-			while( *buffer == ' ' || *buffer == '\t' )
-				buffer++;
-			start = buffer;
-		}
-
-		if( *buffer == '"' || *buffer == '\'' ) {
-			if( !separator ) {
-				separator = *buffer++;
-			}
-			else {
-				separator = '\0';
-				*buffer++ = '\0';
-				start = NULL;
-			}
-		}
-		else {
-			if( !start )
-				start = buffer;
+		while( *buffer && *buffer == ' ' )
 			buffer++;
-		}
+		start = buffer;
+
+		words[count++] = start;
+
+		while( *buffer && *buffer != ' ' )
+			buffer++;
+
+		*buffer = '\0';
+		if( buffer < end )
+			buffer++;
 	}
 
-	if( separator )
-		return -1;
-
-	return 0;
+	return count;
 }
-
