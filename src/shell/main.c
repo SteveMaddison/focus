@@ -18,6 +18,7 @@ int shell_start( void )
     char buffer[SHELL_BUFFER_SIZE];
     int fd, bytes, word_count, i = 0;
     char *words[SHELL_MAX_WORDS];
+    char *prompt;
 
     fd = open( "con0:", 0 );
     if( fd == -1 ) {
@@ -28,10 +29,17 @@ int shell_start( void )
 	env_init();
 
     for(;;){
-    	printf("> ");
+    	prompt = env_get( "PROMPT" );
+    	if( !prompt ){
+    		prompt = "> ";
+    	}
+    	printf("%s", prompt);
+
 		bytes = readline( fd, buffer, SHELL_BUFFER_SIZE );
 		buffer[ bytes ] = '\0';
-		if( word_count = parse( buffer, &words, bytes ) ) {
+		word_count = parse( buffer, &words, bytes );
+		if( word_count ) {
+			printf("%d words, first is '%s'\n", word_count, words[0] );
 			if( !strcmp( words[0], "cls" ) ) {
 				cls();
 			}
@@ -64,27 +72,28 @@ int shell_start( void )
 static int parse( char *buffer, char *words[], int size )
 {
 	char *start = NULL;
+	char *pos = buffer;
 	char *end = buffer + size;
 	char quote;
 	int count = 0;
 
-	while( *buffer ) {
-		while( *buffer && *buffer == ' ' )
-			buffer++;
-		start = buffer;
+	while( *pos ) {
+		while( *pos && *pos == ' ' )
+			pos++;
+		start = pos;
 
-		switch( *buffer ) {
+		switch( *pos ) {
 			case '"':
 			case '\'':
-				quote = *buffer;
+				quote = *pos;
 				start++;
-				buffer++;
-				while( *buffer && *buffer != quote ) {
-					buffer++;
+				pos++;
+				while( *pos && *pos != quote ) {
+					pos++;
 				}
-				if( *buffer == quote ) {
-					*buffer = '\0';
-					buffer++;
+				if( *pos == quote ) {
+					*pos = '\0';
+					pos++;
 				}
 				else {
 					printf( "Unmatched quote (%c)\n", quote );
@@ -95,11 +104,11 @@ static int parse( char *buffer, char *words[], int size )
 
 			case '$':
 				start++;
-				buffer++;
-				while( *buffer && *buffer != ' ' ) {
-					buffer++;
+				pos++;
+				while( *pos && *pos != ' ' ) {
+					pos++;
 				}
-				*buffer = '\0';
+				*pos = '\0';
 				if( words[count] = env_get( start ) )
 					count++;
 				break;
@@ -109,12 +118,12 @@ static int parse( char *buffer, char *words[], int size )
 				break;
 		}
 
-		while( *buffer && *buffer != ' ' )
-			buffer++;
+		while( *pos && *pos != ' ' )
+			pos++;
 
-		*buffer = '\0';
-		if( buffer < end )
-			buffer++;
+		*pos = '\0';
+		if( pos < end )
+			pos++;
 	}
 
 	return count;
