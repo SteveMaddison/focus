@@ -1,1 +1,7 @@
-SUBDIRS=arch devices shell fs memory data util drivers
+# It's important that things appear in the right order here.
+# For now, this is rather Z80 specific:
+#  - The arch directory must come first as it relies on being
+#    put at a specific location by the linker.
+#  - The memory directory must be last as it will grab all RAM
+#    after the last defined variable.
+SUBDIRS=arch devices shell fs data util drivers memory
