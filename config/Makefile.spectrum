@@ -34,7 +34,19 @@ LDFLAGS=-n -c -- -b_CODE=$(CODE_ADDR) -b_DATA=$(DATA_ADDR) -b_STACK=$(STACK_ADDR
 HEX2BIN=hex2bin
 H2BFLAGS=-s $(CODE_ADDR)
 
-# Make a dependency file for a C source file (these are included below).
-%.d: %.c
-	$(CC) $(CFLAGS) -M $< | sed "s/$*.rel: $*.c/$*.o:/" > $@
+# Make sure first the first target we come across *isn't* focus.bin
+.PHONY: dummy
+all: dummy
+
+focus.bin: focus.ihx
+	@echo Converting $< '->' $@
+	@$(HEX2BIN) $(H2BFLAGS) focus.ihx > /dev/null
+
+focus.ihx: src/src.a
+	@echo Linking $@
+	@$(LD) $(LDFLAGS) -i $@ $<
+
+clean: dirclean
+dirclean:
+	@rm -f focus.ihx focus.map focus.sym
 

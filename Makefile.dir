@@ -24,18 +24,6 @@ success: focus.bin
 	@echo Mission complete!
 	@echo Kernel size: `ls -l $< | awk '{print $$5}'` bytes
 
-focus.bin: focus.ihx
-	@echo Converting $< '->' $@
-	@$(HEX2BIN) $(H2BFLAGS) focus.ihx > /dev/null
-
-focus.ihx: src/src.a
-	@echo Linking $@
-	@$(LD) $(LDFLAGS) -i $@ $<
-
-clean: dirclean
-dirclean:
-	@rm -f focus.ihx focus.map focus.sym
-
 realclean: dirrealclean
 dirrealclean: dirclean
 	@rm -f focus.bin
