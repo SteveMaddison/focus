@@ -17,10 +17,10 @@
 
     .globl _main
 
+	im		1
     jp      _main
 
-    .db      0
-    .db      0
+; padding so that _intr_catch will be at 0x38
     .db      0
     .db      0
     .db      0

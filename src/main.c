@@ -12,9 +12,6 @@
 #include "focus/vfs.h"
 #include "focus/shell.h"
 
-
-static void banner();
-
 void main( void )
 {
 	errno = 0;
@@ -40,5 +37,8 @@ void main( void )
 
 	/* fire up the shell! */
 	shell_start();
+
+	/* should never get here... */
+	for(;;);
 }
 

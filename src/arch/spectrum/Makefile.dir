@@ -1,1 +1,1 @@
-OBJS=boot.o interrupt.o intr.o
+OBJS=boot.o intr.o interrupt.o

@@ -15,11 +15,9 @@
 extern void outb( char port, char byte );
 extern char inb( char port );
 extern char inb_fe( char port );
-extern void intr_set_i( char i_reg );
-extern void intr_enable( void );
-extern void intr_disable( void );
-extern void intr_return( void );
 extern size_t* get_sp( void );
+extern void save_context( void );
+extern void restore_context( void );
 extern void reset( void );
 
 extern void doh( const char* message );

@@ -6,19 +6,25 @@
 #include "focus/vfs.h"
 #include "focus/errno.h"
 
-
-#include "focus/spectrum/keyboard.h"
-
 static int parse( char* buffer, char **words, int size );
 
 
-void shell_start( void )
+int shell_start( void )
 {
-    char buffer[64];
+    char buffer[32];
+    int fd;
+    int counter = 0;
 
-    open( "con0:", 0 );
+    fd = open( "con0:", 0 );
+    if( fd == -1 ) {
+    	printf("Can't open con0: (%d) %s\n", errno, strerr( errno ) );
+    	return 1;
+	}
 
     for(;;){
+		if( read( fd, buffer, 32 ) ) {
+			printf( "%s", buffer );
+		}
     }
 }
 

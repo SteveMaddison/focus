@@ -152,7 +152,6 @@ static struct fhandle_s *parse_path( const char* path )
 	/* check the device exists */
 	if ( ! (volume = volume_find( dev_name, number )) )
 	{
-		printf("No vol\n");
 		errno = ENODEV;
 		return NULL;
 	}
@@ -165,6 +164,7 @@ static struct fhandle_s *parse_path( const char* path )
 			 */
 			char *dest = &fhandle->path[0];
 			char src;
+			fhandle->path[0] = '\0';
 
 			/* trim leading slashes */
 			while( path[ pos ] == '/' )

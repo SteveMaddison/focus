@@ -21,7 +21,30 @@
 ; prototypes declared 'spectrum/interrupt.h'
 	.globl _intr_enable		; enable interrupts
 	.globl _intr_disable	; disable interrupts
-	.globl _intr_return		; return from interrupt handler
+	.globl _intr_handle		; link to C code
+
+;----------------------------------------------------------------------
+; If all goes well, this code should end up at 0x0038, and will be
+; enetered when an interrupt fires. All we do is save our context and
+; call the C handler function with interrupts disabled.
+;----------------------------------------------------------------------
+
+_int_catch::
+	di
+	push	af
+	push	bc
+	push	de
+	push	hl
+
+	call	_intr_handle
+
+	pop		hl
+	pop		de
+	pop		bc
+	pop		af
+	ei
+	reti
+
 
 ;----------------------------------------------------
 ; void intr_enable( void );
@@ -29,7 +52,6 @@
 ; switches on interrupts
 ;----------------------------------------------------
 _intr_enable::
-    im		1
 	ei
 	ret
 
@@ -42,14 +64,3 @@ _intr_enable::
 _intr_disable::
 	di
 	ret
-
-
-;----------------------------------------------------
-; void intr_return( void );
-;
-; returns from an interrupt handler routine
-; (after enabling interrupts)
-;----------------------------------------------------
-_intr_return::
-	ei
-	reti

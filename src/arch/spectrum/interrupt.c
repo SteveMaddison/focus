@@ -5,13 +5,11 @@
 
 struct intr_task_s *task_start;
 
-/* Don't put code before this function -
- * it is alligned precisely at 0x0038!
- */
+/* This function is called from intr.s with interrupts disabled */
 void intr_handle( void )
 {
     struct intr_task_s *task = task_start;
-    intr_disable();
+
     while( task )
     {
         if( task->ticks++ == task->interval ) {
@@ -20,7 +18,6 @@ void intr_handle( void )
         }
         task = task->next;
     }
-    intr_enable();
 }
 
 void intr_init( void )

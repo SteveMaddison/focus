@@ -4,6 +4,6 @@
 #define SHELL_BUFFER_SIZE 128
 #define SHELL_MAX_WORDS 32
 
-extern void shell_start( void );
+extern int shell_start( void );
 
 #endif /* _SHELL_H_ */

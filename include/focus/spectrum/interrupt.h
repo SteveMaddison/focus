@@ -12,7 +12,6 @@ extern void intr_init( void );
 extern void intr_handle( void );
 extern void intr_enable( void );
 extern void intr_disable( void );
-extern void intr_return( void );
 extern int intr_task_register( struct intr_task_s *task );
 
 #endif /* _SPECTRUM_INTERRUPT_H_ */
