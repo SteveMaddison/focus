@@ -1,41 +1,36 @@
-#ifndef _SPECTRUM_H_
-#define _SPECTRUM_H_
+#ifndef _AMIGA_H_
+#define _AMIGA_H_
 
 #define MACHINE_NAME		"Commodore Amiga"
 #define CPU_Z80
 
 /*
- * 16Kb ROM at 0x0000
+ * 256Kb ROM at 0xf00000
+ * 256Kb ROM at 0xfc0000
  */
-#define ROM_START		0x0000
-#define ROM_SIZE		0x4000
+#define ROM_START		0xf00000
+#define ROM_SIZE		0x80000
 #define ROM_END			((ROM_START)+(ROM_SIZE)-1)
 
 /*
- * RAM starts at 0x4000
- * config.h: RAM_SIZE
+ * RAM starts at 0x000000
  */
-#define RAM_SIZE		0xc000	/* 48Kb */
-#define RAM_START		0x4000
+#define RAM_START		0x000000
+#define RAM_SIZE		0x80000   /* 512Kb */
 #define RAM_END			((RAM_START)+(RAM_SIZE)-1)
 
 /*
- * 6Kb Video RAM, plus 768 bytes for attributes
- * Located at begining of physical RAM
+ * 8Kb VRAM located at begining of physical RAM
  */
-#define VRAM_START		0x4000
-#define VRAM_SIZE		0x1b00
+#define VRAM_START		0x000000
+#define VRAM_SIZE		0x14000
 #define VRAM_END		((VRAM_START)+(VRAM_SIZE)-1)
-#define ARAM_START		0x5800	/* attribute table */
-#define THIRD_SIZE		2048
-#define ROW_SIZE		256
 
 /*
- * Kernel stack of 512b
- * config.h: KSTACK_SIZE
+ * Kernel stack of 2Kb
  */
-#define KSTACK_SIZE		512
-#define KSTACK_END		0xffff
+#define KSTACK_SIZE		2048
+#define KSTACK_END		0x07ffff
 #define KSTACK_START		((KSTACK_END)-(KSTACK_SIZE)+1)
 
 /*
@@ -45,6 +40,5 @@
 #define MEM_BLOCK_SMALLEST	64	/* Smallest block size */
 #define MEM_BLOCK_BLOCKS	5	/* Number of blocks of each size */
 
-
-#endif /* _SPECTRUM_H_ */
+#endif /* _AMIGA_H_ */
 
