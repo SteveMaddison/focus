@@ -25,6 +25,6 @@ success: focus.bin
 	@echo Kernel size: `ls -l $< | awk '{print $$5}'` bytes
 
 realclean: dirrealclean
-dirrealclean: dirclean
+dirrealclean:
 	@rm -f focus.bin
 

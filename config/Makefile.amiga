@@ -18,3 +18,11 @@ ARFLAGS=-cr
 LD=/usr/m68k-unknown-coff/m68k-unknown-coff/bin/ld
 LDFLAGS=
 
+# Make sure first the first target we come across *isn't* focus.bin
+.PHONY: dummy
+all: dummy
+
+focus.bin: src/src.a
+	@echo Linking $@
+	@$(LD) $(LDFLAGS) -o $@ $<
+
