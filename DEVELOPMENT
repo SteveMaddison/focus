@@ -1,0 +1,35 @@
+                          Focus Kernel Development
+                          ========================
+
+Here are a few things you should know if you've got comments or pathches,
+or want to get into developing the Focus Kernel.
+
+
+1. Portability
+~~~~~~~~~~~~~~
+Although the only target supported so far is the Z80, the goal is to keep
+things as platform-independent as possible. This is why the majority of
+the source is in C, with just a little assembly language where needed, and
+why non-ANSI C language extensions have been avoided.
+
+In theory, to port the kernel to another target shouldn't require much
+work. The architecture-dependent parts of the C code are surrounded by
+'#ifdef ARCH_<whatever>' directives, and all assembly code is (currently)
+in one file.
+
+
+2. State of the Project
+~~~~~~~~~~~~~~~~~~~~~~~
+As the kernel is in the early stages of development, a lot of the code is
+rather less than efficient.
+
+Note also that some of the supposedly 'standard' functions (e.g. prinf())
+may well have decidedly non-standard behaviour.
+
+
+3. Contributing
+~~~~~~~~~~~~~~~
+Any contributions gratefully received! Please supply any patches as a
+diff against a particular version distribution to either
+<focus-bugs@cosam.org> for bug fixes, or <focus@cosam.org> for other
+patches.

@@ -1,0 +1,68 @@
+                         The Focus Kernel
+                         ================
+
+Copyright (c) 2001 - Steve Maddison <steve@cosam.org>
+Distributed under the GNU General Public License (see the COPYING file
+for details).
+
+This distribution contains the source of the Focus kernel. Focus, a Free
+OS for Computers with Unimpressive Specifications, is an open source
+project aiming towards a compact, minimal operating system for equally
+minimal computers, especially homebrew systems (for which it was
+originally designed).
+
+
+1. Building
+~~~~~~~~~~~
+See the INSTALL file for how to build your Focus kernel image.
+
+
+2. License and Distribution
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This software is distributed under the terms of the GNU General Public
+License, a copy of which you'll find in the COPYING file. You are
+therefore allowed to distribute it freely, but please keep it in it's
+original archived state.
+
+
+3. Getting the Latest Version
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The latest version of the kernel, and any other stuff to do with the
+Focus operating system, is available from the URL at the end of this
+file.
+
+
+4. About the Focus Operating System
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Focus, a Free OS for Computers with Unimpressive Specifications, is an
+open source project aiming towards a compact, minimal operating system
+for equally minimal computers, especially homebrew systems (for which
+it was originally designed). You can find out more via the URL below.
+
+
+6. Reporting Bugs
+~~~~~~~~~~~~~~~~~
+Please report any bugs via email (address below). Please include any
+output captured that may help with solving the problem (e.g. the output
+from a "D'oh"). If you'd like to submit a patch for a bug, please see the
+DEVELOPMENT file.
+
+
+5. Contributing
+~~~~~~~~~~~~~~~
+If you have some good ideas or comments, please get in touch (details
+below). If you have patches, or are just downright crazy enough to want to
+participate in the development of the kernel please read the DEVELOPMENT
+file.
+
+
+6. Author / Maintainer / Other Stuff
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The Focus kernel was designed and is maintained by:
+    Steve Maddison <steve@cosam.org>
+
+Please send bug reports/patches to:
+    focus-bugs@cosam.org
+
+More information is currently available at:
+    http://www.cosam.org/projects/focus

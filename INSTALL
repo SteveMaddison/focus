@@ -1,0 +1,62 @@
+                     How To Build Your Focus Kernel
+                     ==============================
+
+
+1. Prerequisits
+~~~~~~~~~~~~~~~
+Although is should be possible to build the kernel under other
+environments, the source distribution is rather Unix-oriented. The kernel
+should build pretty much out-of-the-box under Linux, and building under
+other Unix-like operating systems shouldn't be too hard.
+
+* Make utility - Your best bet is the GNU make utility. If you don't have
+  this, you get if from <http://www.gnu.org/software/make/>. Other 'make's
+  could work, but may require tweaking of the Makefiles.
+
+* C compiler - SDCC, a freeware, retargettable, C compiler is recommended,
+  see <http://sdcc.sourceforge.net>. Although none of the language
+  extensions this compiler offers are used, I have no idea what other
+  compilers will produce.
+
+* Assembler - SDCC comes with the required assembler software. For other
+  compilers, you may well need another assembler.
+
+* Linker - Again, SDCC comes with it's own - other compilers/assemblers
+  may need another.
+
+* Archiver - The 'ar' program, which is supposedly standard in most Unix-
+  like systems.
+
+* hex2bin utility - The version used during development is available from:
+  http://sourceforge.net/projects/hex2bin/
+
+
+2. Kernel Configuration
+~~~~~~~~~~~~~~~~~~~~~~~
+The current method of configuring the kernel is to edit 'config.h' (in
+the root directory of the source distribution) manually. See the comments
+in the file for details.
+
+
+3. Editing Makefile.config
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+The chances are you're going to want to edit some of the settings in here,
+especially if you're using a C compiler other than SDCC. In any case,
+check the various macros are set how you need them. More details can be
+found in the file's comments.
+
+
+4. The Build
+~~~~~~~~~~~~
+If you're using the software listed above, just typing 'make' should
+compile the required sources and generate your kernel image. If you're
+using other software, just hit 'make' anyway and see what happens - you
+may need to edit the Makefile.config. If you end up with a working set of
+Makefiles for a make utility other than the GNU version, please send it
+on so it can be included in the distribution (see the README for contact
+info).
+
+The kernel image is called 'focus.bin', and should appear in the root of
+the distribution. How you get this onto your own hardware is beyond me,
+and also the scope of this document.
+

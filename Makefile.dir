@@ -1,0 +1,40 @@
+#
+# Directory-specific make options for this directory.
+# Most of the real work is done by "Makefile.config".
+#
+
+# If we don't specify which subdirectories we want to
+# build, Makefile.config will assume we want to run make
+# in all of them.
+SUBDIRS=src
+# We don't want to build compile and sources, nor a
+# library in this directory
+SRCS=
+LIB=
+
+#
+# To build the binary image...
+#
+all: success
+
+success: focus.bin
+	@echo '--'
+	@echo Mission complete!
+	@echo Kernel size: `ls -l $< | awk '{print $$5}'` bytes
+
+focus.bin: focus.ihx
+	@echo Converting $< '->' $@
+	@$(HEX2BIN) $(H2BFLAGS) focus.ihx > /dev/null
+
+focus.ihx: src/src.a
+	@echo Linking $@
+	@$(LD) $(LDFLAGS) -i $@ $<
+
+clean: dirclean
+dirclean:
+	@rm -f focus.ihx focus.map focus.sym
+
+realclean: dirrealclean
+dirrealclean: dirclean
+	@rm -f focus.bin
+
