@@ -36,9 +36,7 @@ void main( void )
     intr_enable();
 
 	/* fire up the shell! */
-	shell_start();
-
-	/* should never get here... */
-	for(;;);
+	for(;;) {
+		shell_start();
+	}
 }
-

@@ -41,6 +41,10 @@ int shell_start( void )
 				}
 				printf("\n");
 			}
+			else if( !strcmp( words[0], "exit" ) ) {
+				printf("bye...\n");
+				return 0;
+			}
 			else if( !strcmp( words[0], "mem" ) ) {
 				cmd_mem();
 			}
