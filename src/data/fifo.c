@@ -6,6 +6,7 @@
 
 #include "focus/fifo.h"
 #include "focus/memory.h"
+#include "focus/util.h"
 
 struct fifo_s *fifo_create( size_t size )
 {
@@ -94,3 +95,9 @@ int fifo_write( struct fifo_s *fifo, char *data, size_t length )
 	}
 }
 
+void fifo_dump( struct fifo_s *fifo )
+{
+	printf("size: %d\n", fifo->size );
+	printf("flags: %x\n", fifo->flags );
+	printf("head/tail: %x/%x\n", fifo->head, fifo->tail );
+}

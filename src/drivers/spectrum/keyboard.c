@@ -1,5 +1,6 @@
 #include "focus/interrupt.h"
 #include "focus/spectrum/keyboard.h"
+#include "focus/spectrum/sound.h"
 #include "focus/util.h"
 #include "focus/fifo.h"
 
@@ -9,7 +10,7 @@ static struct intr_task_s kb_intr_task;
 static char last_key;
 static int last_key_time;
 static char caps_lock;
-static struct fifo_s* kb_buffer;
+struct fifo_s* kb_buffer;
 
 /* These are statics to avoid having to reallocate
  * every time kb_scan() is called.
@@ -23,9 +24,8 @@ int kb_init( void )
 	caps_lock = 0;
     kb_buffer = fifo_create( KB_BUFFER_SIZE );
 
-    kb_intr_task.interval = 5;
+    kb_intr_task.interval = 0;
     kb_intr_task.function = kb_intr;
-    printf("task at %x\n", &kb_intr_task );
     intr_task_register( &kb_intr_task );
 
 	return 0;
@@ -144,8 +144,10 @@ char kb_scan( void ) {
 static void kb_intr( void )
 {
     char c;
-    if( c = kb_scan() )
-    {
-        fifo_write( kb_buffer, &c, 1 );
+    if( c = kb_scan() ) {
+    	if( fifo_write( kb_buffer, &c, 1 ) != 1 ) {
+    		/* can't write - probably full */
+    		beep();
+    	}
     }
 }

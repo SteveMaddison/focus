@@ -34,8 +34,5 @@ int intr_task_register( struct intr_task_s *task )
     task->ticks = 0;
     task_start  = task;
 
-    printf("registered intr_task %x\n", task );
-    printf("funcation @ %x\n", task->function );
-
     return 0;
 }

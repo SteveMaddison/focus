@@ -40,11 +40,7 @@ int console_init( void )
 static int console_open( struct fhandle_s *fhandle, int flags )
 {
     UNUSED(flags);
-    fhandle->fifo_in = fifo_create( KB_BUFFER_SIZE );
-    if( !fhandle->fifo_in ) {
-        errno = ENOMEM;
-        return -1;
-    }
+    fhandle->fifo_in = kb_buffer;
     fhandle->fifo_out = fifo_create( CRT_BUFFER_SIZE );
     if( !fhandle->fifo_out ) {
         errno = ENOMEM;

@@ -33,6 +33,7 @@ void main( void )
 	/* new line after all initialisation messages */
 	printf("\n");
 
+	kb_init();
     console_init();
 
     intr_enable();

@@ -14,9 +14,6 @@ int hw_init()
 	if( sound_init() )
 		return 1;
 
-	if( kb_init() )
-		return 1;
-
 	return 0;
 }
 

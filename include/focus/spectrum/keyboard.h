@@ -3,6 +3,7 @@
 
 extern int kb_init( void );
 extern char kb_scan( void );
+extern struct fifo_s* kb_buffer;
 
 #define KB_BUFFER_SIZE      32
 

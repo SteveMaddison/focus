@@ -27,5 +27,6 @@ void fifo_clear( struct fifo_s *fifo );
 
 int fifo_read( struct fifo_s *fifo, char *data, size_t length );
 int fifo_write( struct fifo_s *fifo, char *data, size_t length );
+void fifo_dump( struct fifo_s *fifo );
 
 #endif /* _FIFO_H_ */
