@@ -1,3 +1,4 @@
+#include "focus/fifo.h"
 #include "focus/shell.h"
 #include "focus/shell/commands.h"
 #include "focus/util.h"
@@ -5,25 +6,43 @@
 #include "focus/vfs.h"
 #include "focus/errno.h"
 
+
+#include "focus/spectrum/keyboard.h"
+
 static int parse( char* buffer, char **words, int size );
 
 
 void shell_start( void )
 {
+    /*
 	char buffer[ SHELL_BUFFER_SIZE ];
-	char *words[ SHELL_MAX_WORDS ];
-	int word;
-	int fh = 99;
-	char tmp[ 99 ];
 
-	for(;;) {
+    char c;
+    char d;
+
+    fifo_in = fifo_create( 32 );
+    if( fifo_in ) {
+        printf("> ");
+    	for(;;) {
+            if( c = kb_scan() ) {
+                fifo_write( fifo_in, &c, 1 );
+                fifo_read( fifo_in, &d, 1 );
+                printf("%c", d );
+            }
+        }
+
+    }
+
+
+
+    {
 		printf("> ");
 		readline( buffer, SHELL_BUFFER_SIZE );
 
 		if( !strcmp( buffer, "open" ) ) {
 			fh = open( "zer:", 0 );
-			printf("fh: %d (%s)\n", fh, strerr(errno) );
 			read( fh, tmp, 20 );
+			printf( "%x\n", tmp[0] );
 			close( fh );
 		}
 		else if( !strcmp( buffer, "vols" ) ) {
@@ -36,7 +55,7 @@ void shell_start( void )
 		}
 		else if( !strcmp( buffer, "devs" ) ) {
 			struct device_s *dev = device_start;
-			printf("dev_start: %x\n", dev );
+			printf("dev_start: %x (%x)\n", dev, &dev );
 			while( dev ) {
 				printf("%x: %s:\n", dev, dev->name );
 				dev = dev->next;
@@ -46,6 +65,7 @@ void shell_start( void )
 			printf( "Unknown command\n" );
 		}
 	}
+	*/
 }
 
 static int parse( char* buffer, char **words, int size )

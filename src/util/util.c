@@ -8,7 +8,7 @@
 void doh( const char* message )
 {
 	printf( ", ,\n0o0 D'oh! (%d)\n ~\n%s\n", errno, message );
-	stack_dump();
+	/*stack_dump();*/
 
 	/* it's not like we can do a lot about it now... */
 	for (;;);

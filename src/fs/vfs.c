@@ -149,8 +149,6 @@ static struct fhandle_s *parse_path( const char* path )
 	}
 	pos++; /* point to after ':' character */
 
-	printf("name: '%s' no: %d\n", dev_name, number );
-
 	/* check the device exists */
 	if ( ! (volume = volume_find( dev_name, number )) )
 	{

@@ -66,30 +66,34 @@ int mem_dev_init( void )
 
 static int bb_open( struct fhandle_s *fhandle, int flags )
 {
+    UNUSED(flags);
 	/* no filesystem on this device! */
-	printf("opening!\n");
-/*
-	if( fhandle->path ) {
-		printf("path! '%s'\n", fhandle->path );
+	if( fhandle->path[0] ) {
 		errno = ENOENT;
 		return -1;
 	}
-	*/
+
 	return 0;
 }
 
 static int null_read( struct fhandle_s *fhandle, char* buffer, int bytes )
 {
+    UNUSED(fhandle);
+    UNUSED(buffer);
+    UNUSED(bytes);
 	return 0;
 }
 
 static int zero_read( struct fhandle_s *fhandle, char* buffer, int bytes )
 {
+    UNUSED(fhandle);
 	memset( buffer, '\0', bytes );
 	return bytes;
 }
 
 static int bb_write( struct fhandle_s *fhandle, const char* buffer, int bytes )
 {
+    UNUSED(fhandle);
+    UNUSED(buffer);
 	return bytes;
 }

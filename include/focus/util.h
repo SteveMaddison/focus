@@ -10,6 +10,8 @@
 # include "focus/readline.h"
 #endif
 
+#define UNUSED(x) (x)=(x)
+
 extern void outb( char port, char byte );
 extern char inb( char port );
 extern char inb_fe( char port );

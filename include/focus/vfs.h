@@ -14,7 +14,8 @@
 struct fhandle_s {
 	struct io_func_s *functions;
 	char			path[ PATH_MAX_LEN ];
-	struct fifo_s	*fifo;
+	struct fifo_s	*fifo_in;
+	struct fifo_s	*fifo_out;
 };
 
 struct fs_s {
