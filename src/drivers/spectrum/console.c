@@ -24,7 +24,17 @@ int console_init( void )
 	console_func.write	= (void*)console_write;
 	console_func.sync	= NULL;
 
-    return 0;
+    if ( device_register( &console_dev ) == 0 ) {
+		console_vol.dev = &console_dev;
+		console_vol.number = 0;
+		console_vol.root = NULL;
+		console_vol.fs = NULL;
+
+		if( volume_register( &console_vol ) == 0 )
+			return 0;
+	}
+
+	return -1;
 }
 
 static int console_open( struct fhandle_s *fhandle, int flags )

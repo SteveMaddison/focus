@@ -1,7 +1,9 @@
 #include "config.h"
 #ifdef ARCH_SPECTRUM
 #include "focus/spectrum/main.h"
+#include "focus/spectrum/console.h"
 #endif
+#include "focus/interrupt.h"
 #include "focus/util.h"
 #include "focus/types.h"
 #include "focus/version.h"
@@ -26,11 +28,14 @@ void main( void )
 
 	memory_init();
 	device_init();
-	if( vfs_init() )
-		doh("vfs_init()");
+	vfs_init();
+
+    intr_init();
 
 	/* new line after all initialisation messages */
 	printf("\n");
+
+    console_init();
 
 	/* fire up the shell! */
 	shell_start();

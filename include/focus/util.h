@@ -25,7 +25,7 @@ extern void reset( void );
 extern void doh( const char* message );
 extern void stack_dump( void );
 
-void* memcpy( void* dest, const void* src, size_t n );
+void *memcpy( void* dest, const void* src, size_t n );
 void *memset( void *dest, char byte, size_t n );
 
 char *strcpy( char* dest, const char* src );
