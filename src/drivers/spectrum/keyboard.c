@@ -23,8 +23,9 @@ int kb_init( void )
 	caps_lock = 0;
     kb_buffer = fifo_create( KB_BUFFER_SIZE );
 
-    kb_intr_task.interval = 0;
+    kb_intr_task.interval = 5;
     kb_intr_task.function = kb_intr;
+    printf("task at %x\n", &kb_intr_task );
     intr_task_register( &kb_intr_task );
 
 	return 0;

@@ -20,6 +20,7 @@ void main( void )
 	errno = 0;
 
 	intr_disable();
+	intr_init();
 	hw_init();
 
 	/* print a banner */
@@ -28,7 +29,6 @@ void main( void )
 	memory_init();
 	device_init();
 	vfs_init();
-	intr_init();
 
 	/* new line after all initialisation messages */
 	printf("\n");

@@ -11,6 +11,7 @@ struct intr_task_s *task_start;
 void intr_handle( void )
 {
     struct intr_task_s *task = task_start;
+    intr_disable();
     while( task )
     {
         if( task->ticks++ == task->interval ) {
@@ -19,7 +20,7 @@ void intr_handle( void )
         }
         task = task->next;
     }
-    intr_return();
+    intr_enable();
 }
 
 void intr_init( void )
@@ -32,6 +33,9 @@ int intr_task_register( struct intr_task_s *task )
     task->next  = task_start;
     task->ticks = 0;
     task_start  = task;
+
+    printf("registered intr_task %x\n", task );
+    printf("funcation @ %x\n", task->function );
 
     return 0;
 }
