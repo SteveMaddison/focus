@@ -1,0 +1,40 @@
+#
+# Make macros form Spectrum target
+# 
+
+# Architecture stuff
+ARCH=spectrum
+CPU=z80
+
+# Start addresses for code, data and stack - if you change these, you may
+# also want to change $H2BFLAGS below, and the 'Memory' settings in config.h
+CODE_ADDR=0x0000
+DATA_ADDR=0x5b00
+STACK_ADDR=0xffff
+
+# C complier
+CC=sdcc -mz80
+CFLAGS=--stack-auto -DDEBUG -I$(TOPDIR) -I./include -I$(TOPDIR)/include
+
+# Assembler and flags
+AS=as-z80
+ASFLAGS=-plosgff
+
+AR=ar
+ARFLAGS=-cr
+
+# linking by calling sdcc barfed - it calls something similar
+# to that below, but includes extra .o files we don't want
+LD=link-z80
+# the correct path to the z80 lib can be set here
+LDFLAGS=-n -c -- -b_CODE=$(CODE_ADDR) -b_DATA=$(DATA_ADDR) -b_STACK=$(STACK_ADDR) \
+-m -j -k/usr/local/share/sdcc/lib/z80 -lz80.lib
+
+# The hex2bin util used to convert our ihx file to a binary
+HEX2BIN=hex2bin
+H2BFLAGS=-s $(CODE_ADDR)
+
+# Make a dependency file for a C source file (these are included below).
+%.d: %.c
+	$(CC) $(CFLAGS) -M $< | sed "s/$*.rel: $*.c/$*.o:/" > $@
+
