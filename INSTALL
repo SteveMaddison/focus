@@ -60,3 +60,18 @@ The kernel image is called 'focus.bin', and should appear in the root of
 the distribution. How you get this onto your own hardware is beyond me,
 and also the scope of this document.
 
+
+5. Running Focus on a Spectrum Emulator
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The compiled focus.bin file is a drop-in replacement for the ZX Spectrum
+ROM. Most emulators supply several ROM files for different machines, so
+you may wish to replace one of the more obscure versions with your own
+kernel image.
+
+For development, I find it's handy to put the emulator software on a
+Samba shared directory, then make a symlink with the same name as the
+ROM file to focus.bin. This way, when the kernel is updated, the new
+verison can be tested on the emulator by simply resetting it. Note
+however that not all emulators reload the ROM file when reset, so you
+may need to restart the emulator itself.
+
