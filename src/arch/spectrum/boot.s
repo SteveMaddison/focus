@@ -37,7 +37,8 @@
 ; powered up or reset.
 	di				; disable interrupts
 	im		1		; set interrupt mode (this is what the Specturm normally uses)
-    jp      _main	; jump to the main() function, in src/main.c
+    jp      _main	; jump to the main() function, in src/main.c (not a "call" as
+    				; main() is void and we don't want to come back here...)
 
 
 ;----------------------------------------------------
@@ -116,4 +117,3 @@ _reset::
     .db      0
     .db      0
     .db      0
-    

@@ -1,6 +1,6 @@
 ;
 ;  File         : interrupt.s
-;  Description  : Architecture-dependent assembly source for the Z80
+;  Description  : Architecture-dependent interrupt stuff for Specturm
 ;
 ;  Begin        : Mon Nov 12 2001
 ;  Copyright    : (C) 2001 by Steve Maddison
@@ -21,29 +21,28 @@
 ; prototypes declared 'spectrum/interrupt.h'
 	.globl _intr_enable		; enable interrupts
 	.globl _intr_disable	; disable interrupts
-	.globl _intr_handle		; link to C code
+	.globl _intr_handle		; link to C code (interrupt.c)
 
 ;----------------------------------------------------------------------
-; If all goes well, this code should end up at 0x0038, and will be
-; enetered when an interrupt fires. All we do is save our context and
+; If all goes well, the code here should end up at 0x0038, and will be
+; entered when an interrupt fires. All we do is save our context and
 ; call the C handler function with interrupts disabled.
 ;----------------------------------------------------------------------
-
 _int_catch::
-	di
-	push	af
+	di						; disable interrupts
+	push	af				; store registers
 	push	bc
 	push	de
 	push	hl
 
-	call	_intr_handle
+	call	_intr_handle	; call C handler
 
-	pop		hl
+	pop		hl				; restore registers
 	pop		de
 	pop		bc
 	pop		af
-	ei
-	reti
+	ei						; re-enable interrupts
+	reti					; return from interrupt handler
 
 
 ;----------------------------------------------------

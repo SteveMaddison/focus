@@ -1,1 +1,5 @@
+# The ordering here is important!
+# - boot.o contains some basic functions and must fill up to and including 0x0037
+# - intr.o starts at 0x0038 (jumped to when an interrupt is fired)
+# - interrupt.o is made from the C code, and could actually go anywhere
 OBJS=boot.o intr.o interrupt.o
