@@ -7,7 +7,7 @@
 #include "focus/vfs.h"
 #include "focus/errno.h"
 
-static int parse( char* buffer, char **words, int size );
+static int parse( char *buffer, char *words[], int size );
 
 
 int shell_start( void )
