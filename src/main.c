@@ -38,5 +38,6 @@ void main( void )
 	/* fire up the shell! */
 	for(;;) {
 		shell_start();
+		printf("Respawning shell\n");
 	}
 }

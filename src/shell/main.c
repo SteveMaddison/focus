@@ -59,6 +59,7 @@ static int parse( char *buffer, char *words[], int size )
 {
 	char *start = NULL;
 	char *end = buffer + size;
+	char quote;
 	int count = 0;
 
 	while( *buffer ) {
@@ -66,6 +67,22 @@ static int parse( char *buffer, char *words[], int size )
 			buffer++;
 		start = buffer;
 
+		if( *buffer == '"' || *buffer == '\'' ) {
+			quote = *buffer;
+			start++;
+			buffer++;
+			while( *buffer && *buffer != quote ) {
+				buffer++;
+			}
+			if( *buffer == quote ) {
+				*buffer = '\0';
+				buffer++;
+			}
+			else {
+				printf( "Unmatched quote (%c)\n", quote );
+				return 0;
+			}
+		}
 		words[count++] = start;
 
 		while( *buffer && *buffer != ' ' )
