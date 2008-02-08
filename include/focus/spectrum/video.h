@@ -41,7 +41,7 @@ extern void set_attrib( const char value );
 extern char get_attrib( void );
 extern void plot( const char x, const char y );
 extern void print_string( const char* string );
-extern void print_char( const char letter );
+extern void print_char( const unsigned char letter );
 extern void scroll( void );
 extern void get_cursor( struct cursor_s *cur );
 extern void set_cursor( struct cursor_s *new_cur );

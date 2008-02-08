@@ -15,7 +15,7 @@ ARFLAGS=-cr
 # to that below, but includes extra .o files we don't want
 LD=link-z80
 # the correct path to the z80 lib can be set here
-Z80LIBPATH=/usr/local/share/sdcc/lib/z80
+Z80LIBPATH=/usr/share/sdcc/lib/z80/
 LDFLAGS=-n -c -- -b_CODE=$(CODE_ADDR) -b_DATA=$(DATA_ADDR) -b_STACK=$(STACK_ADDR) \
 -m -j -k$(Z80LIBPATH) -lz80.lib
 

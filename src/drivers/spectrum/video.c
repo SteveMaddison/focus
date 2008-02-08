@@ -132,7 +132,7 @@ void print_string( const char* string )
 
 }
 
-void print_char( const char letter )
+void print_char( const unsigned char letter )
 {
 	if ( letter < 1 || letter > 127 )
 		return;

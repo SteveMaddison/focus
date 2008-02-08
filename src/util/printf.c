@@ -81,7 +81,7 @@ static void printn( int number, int base, char flags )
 		return;
 	}
 
-	if( flags &= SIGNED && number < 0 ) {
+	if( (flags & SIGNED) && number < 0 ) {
 		print_char( '-' );
 		magnitude = (unsigned int) -number;
 	}
